@@ -1,6 +1,6 @@
 # Project for Summer of Code 2021 - Snake AI
 
-## Building the classic snake game using python pygame and making it intelligent with rinforcement learning
+## Building the classic snake game using python pygame and making it intelligent with reinforcement learning
 
 As of now, the project is in its initial stages with only a basic snake game, no reinforcement learning involved. The _objective_ is to collect as many apples as possible without making the snake crash into the walls or itself. The _game controls_ are the arrow keys.
 
