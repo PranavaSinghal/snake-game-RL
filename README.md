@@ -1,4 +1,4 @@
-# Project for Summer of Code 2021 - Snake AI
+# Project for IITB Summer of Code 2021 - Snake AI
 
 ## Building the classic snake game using python pygame and making it intelligent with reinforcement learning
 
