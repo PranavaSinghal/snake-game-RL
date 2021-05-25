@@ -12,6 +12,7 @@ class GridWorld():
         self.start = np.array([3, 0])
         self.goal = np.array([3, 7])
         self.current_state = self.start
+        self.actions = ['up', 'down', 'right', 'left']
         self.reward = -1  # same reward at each time step
 
     def is_valid(self, state):
@@ -50,6 +51,7 @@ class GridWorld():
         elif self.is_valid(new_state):  # if wind pushes it to the boundary
             self.current_state = np.array([0, j])
         # else invalid move
+        self.reward = -1  # in every case
 
 
 if __name__ == '__main__':
