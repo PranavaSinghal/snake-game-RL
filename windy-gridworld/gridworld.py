@@ -14,6 +14,7 @@ class GridWorld():
         self.current_state = self.start
         self.actions = ['up', 'down', 'right', 'left']
         self.reward = -1  # same reward at each time step
+        self.gamma = 1  # undiscounted
 
     def is_valid(self, state):
         # checks if a state lies inside the gridworld
@@ -28,7 +29,7 @@ class GridWorld():
         up = np.array([-1, 0])
         down = np.array([1, 0])
         right = np.array([0, 1])
-        left = np.array([-1, 0])
+        left = np.array([0, -1])
         new_state = state
         # without accounting for wind
         if action == 'up':
