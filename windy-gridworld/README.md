@@ -6,9 +6,9 @@ An RL agent attempts to navigate a windy gridworld and finds the shortest path f
 Navigate to the windy-gridworld folder and execute [solution.py](windy-gridworld\solution.py)
 ~~~
 cd snake-game-rl\windy-gridworld
-python solution.py
+python solution.py [--arguments]
 ~~~
-You will be asked to enter a variety of parameters for the RL agent
+You can enter a variety of arguments(optional) for the RL agent in the command line (example given later)
 
 1) Type of moves
 + standard [up, down, left, right]
@@ -31,6 +31,22 @@ These are 3 different _Temporal Difference Learning_ methods
 + with annealing the agent reduces exploration over time and behaves most greedily
 + without annealing, the agent continues exploration with an epsilon-soft policy
 + Exploration is beneficial for dynamic environments (for instance, in the case of stochastic wind)
+
+5) Compare
++ yes - plots all three algorithms onn same graph for comparison
++ no - plots graph for specified mode (Q_learning by default)
+##### For example you may execute any of these
+~~~
+python solution.py --compare yes --moves 'kings with stay' --annealing yes
+~~~
+~~~
+python solution.py --compare no --mode 'Expected_SARSA' --annealing no
+~~~
+~~~
+python solution.py
+~~~
+
+Default argument values can be found in solution.py
 
 #### Some Results
 The performance of different learning algorithms has been compared by plotting __episodes__ on the y-axis and corresponding __timesteps__ on the x-axis.
