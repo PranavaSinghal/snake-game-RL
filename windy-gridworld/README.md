@@ -39,9 +39,9 @@ A larger slope corresponds to shorter time per episode and therefore, a more opt
 
 Performance of Q-Learning:
 
-![Q_learning_standard_moves_constant_wind](windy-gridworld\results\Q_learning_standard_moves_constant_wind.png)
+![Q_learning_standard_moves_constant_wind](./windy-gridworld/results/Q_learning_standard_moves_constant_wind.png)
 
-![Q_learning_standard_moves_stochastic_wind](windy-gridworld\results\Q_learning_standard_moves_stochastic_wind.png)
+![Q_learning_standard_moves_stochastic_wind](./windy-gridworld/results/Q_learning_standard_moves_stochastic_wind.png)
 
 
 #### References
