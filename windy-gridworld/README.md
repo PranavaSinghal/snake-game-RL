@@ -37,12 +37,11 @@ The performance of different learning algorithms has been compared by plotting _
 
 A larger slope corresponds to shorter time per episode and therefore, a more optimal solution. In the case of constant wind, once the slope settles on a constant value the optimal solution has been found.
 
-Performance of Q-Learning:
+###### With standard moves & constant wind
 
-![Q_learning_standard_moves_constant_wind](windy-gridworld\results\Q_learning_standard_moves_constant_wind.png)
+![pic](windy-gridworld/results/comparison_standard_moves_constant_wind.png)
 
-![Q_learning_standard_moves_stochastic_wind](windy-gridworld\results\Q_learning_standard_moves_stochastic_wind.png)
-
+Other examples can be found in [results](windy-gridworld/results)
 
 #### References
 For a complete description of windy gridworld refer to page 152, [_Reinforcement Learning_](http://incompleteideas.net/book/RLbook2020.pdf) by Barto and Sutton

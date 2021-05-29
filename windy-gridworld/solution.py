@@ -1,8 +1,11 @@
+from gridworld import GridWorld
 import numpy as np
 import matplotlib.pyplot as plt
 import random
 import copy
-from gridworld import GridWorld
+import argparse
+import sys
+parser = argparse.ArgumentParser()
 
 
 class Agent():
@@ -14,8 +17,8 @@ class Agent():
     3)Expected SARSA
     '''
 
-    def __init__(self):
-        self.mdp = GridWorld()
+    def __init__(self, moves):
+        self.mdp = GridWorld(moves)
         self.alpha = 0.5  # learning rate parameter
         self.epsilon = 0.1  # building epsilon-soft policy for exploration
         self.Q = dict()  # Q(S,A) state-action values
@@ -32,6 +35,7 @@ class Agent():
         self.num_episodes = 1
         self.timesteps = 1
         self.time_for_episode = []
+        '''
         stochastic = input("Do you want stochastic wind ['yes','no']:")
         if stochastic == 'yes':
             self.mdp.stochastic_wind = True
@@ -47,7 +51,7 @@ class Agent():
                 self.annealing = False
         else:
             self.annealing = False
-        self.solve(mode)
+        '''
 
     def epsilon_greedy_policy(self, state):
         ''' computes epsilon-greedy policy(action|state) for given state using Q
@@ -87,7 +91,7 @@ class Agent():
         return q_sum
 
     def one_episode(self, mode='SARSA'):
-        ''' 1 episode of SARSA
+        ''' 1 episode of SARSA/ Expected_SARSA/ Q_learning (given by mode)
         initial state = start state'''
         # print("starting episode =", self.num_episodes)
         self.mdp.current_state = self.mdp.start
@@ -138,7 +142,8 @@ class Agent():
                     print('\n')
             '''
 
-    def create_plot(self, x, y, title):
+    '''
+        def create_plot(self, x, y, title):
         plt.plot(x, y, 'b-')
         plt.title(title)
         plt.xlabel('timesteps')
@@ -146,31 +151,27 @@ class Agent():
         plt.xlim(0, 10000)
         plt.ylim(0, 200)
         plt.show()
+    '''
 
     def solve(self, mode='SARSA'):
         '''solve the GridWorld MDP usig chosen solver (mode)'''
-        if mode in ['SARSA', 'Expected_SARSA', 'Q_learning']:
-            self.timesteps = 0
-            self.num_episodes = 1
-            episode_points = [0]
-            timestep_points = [0]
-            while self.timesteps < 10000:  # needs a condition for convergence
-                start_time = self.timesteps
-                self.one_episode(mode)
-                end_time = self.timesteps
-                self.time_for_episode.append((end_time-start_time))
-                episode_points.append(self.num_episodes)
-                timestep_points.append(self.timesteps)
-                self.num_episodes += 1
-            plot_title = f"Performance of {mode}\nmoves({self.mdp.move_type})\nstochastic wind({self.mdp.stochastic_wind})"
-            if mode != 'Q_learning':
-                plot_title += f'\nannealing({self.annealing})'
+        self.timesteps = 0
+        self.num_episodes = 1
+        episode_points = [0]
+        timestep_points = [0]
+        while self.num_episodes < 200:  # needs a condition for convergence
+            start_time = self.timesteps
+            self.one_episode(mode)
+            end_time = self.timesteps
+            self.time_for_episode.append((end_time-start_time))
+            episode_points.append(self.num_episodes)
+            timestep_points.append(self.timesteps)
+            self.num_episodes += 1
+        plot_title = f"Performance of {mode}\nmoves({self.mdp.move_type})\nstochastic wind({self.mdp.stochastic_wind})"
+        if mode != 'Q_learning':
+            plot_title += f'\nannealing({self.annealing})'
 
-            self.create_plot(timestep_points, episode_points, plot_title)
-
-        else:
-            print("Invalid solver (Try 'SARSA','Expected_SARSA' or 'Q_learning')")
-            return
+            #self.create_plot(timestep_points, episode_points, plot_title)
 
         if self.mdp.stochastic_wind == False:
             self.epsilon = 0
@@ -184,7 +185,7 @@ class Agent():
                 self.mdp.move(
                     self.mdp.current_state, self.epsilon_greedy_policy(self.mdp.current_state))
                 path.append(tuple(self.mdp.current_state))
-
+            print(f"\nbest solution for {mode} in {self.num_episodes} episodes")
             for i in range(self.mdp.rows):
                 for j in range(self.mdp.columns):
                     state_tuple = (i, j)
@@ -193,6 +194,78 @@ class Agent():
                     print(state_tuple, end='\t')
                 print('\n')
 
+        return (timestep_points, episode_points, plot_title)
+
+    def answer(self, mode):
+        if self.mdp.stochastic_wind:
+            timestep_points, episode_points, plot_title = self.solve(mode)
+            t_sum = np.array(timestep_points)
+            for _ in range(9):
+                _, t_val, _ = self.solve(mode)
+                t_sum += np.array(t_val)
+            return (t_sum/10, episode_points, plot_title)
+        else:
+            return self.solve(mode)
+
+
+def define_agent(args):
+    if args.moves in ['standard', 'kings', 'kings with stay']:
+        moves = args.moves
+    else:
+        print("Invalid moves, try from ['standard','kings','kings with stay']")
+
+    agent = Agent(moves)
+
+    if args.stochastic == 'yes':
+        agent.mdp.stochastic_wind = True
+    elif args.stochastic == 'no':
+        agent.mdp.stochastic_wind = False
+    else:
+        print("Enter 'yes' or 'no' for --stochastic")
+
+    if args.mode in ['SARSA', 'Expected_SARSA', 'Q_learning']:
+        mode = args.mode
+    else:
+        print("Invalid solver mode (Try 'SARSA','Expected_SARSA' or 'Q_learning')")
+
+    if args.annealing == 'yes':
+        agent.annealing = True
+    else:
+        agent.annealing = False
+    return agent, mode
+
+
+def efficiency_plot(x, y, title, mode):
+    plt.plot(x, y, '-', label=mode)
+    plt.title(title)
+    plt.xlabel('timesteps')
+    plt.ylabel('episodes')
+    plt.xlim(0, 10000)
+    plt.ylim(0, 200)
+
 
 if __name__ == '__main__':
-    agent = Agent()
+    parser.add_argument("--stochastic", type=str, default='no')
+    parser.add_argument("--moves", type=str, default='standard')
+    parser.add_argument("--mode", type=str, default='Q_learning')
+    parser.add_argument("--annealing", type=str, default='yes')
+    parser.add_argument("--compare", type=str, default='yes')
+
+    args = parser.parse_args()
+    if args.compare == 'no':
+        agent, mode = define_agent(args)
+        x, y, title = agent.answer(mode)
+        efficiency_plot(x, y, title, mode)
+        plt.show()
+    elif args.compare == 'yes':
+        for mode in ['SARSA', 'Expected_SARSA', 'Q_learning']:
+            args.mode = mode
+            agent, _ = define_agent(args)
+            x, y, title = agent.answer(mode)
+            efficiency_plot(x, y, title, mode)
+        title = title.split('\n')
+        title[0] = 'Performance comparison'
+        title = "\n".join(title)
+        plt.title(title)
+        plt.legend()
+        plt.show()

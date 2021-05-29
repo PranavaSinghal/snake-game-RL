@@ -6,7 +6,7 @@ import sys
 class GridWorld():
     '''Formulation of Windy Gridworld as an undiscounted episodic MDP'''
 
-    def __init__(self):
+    def __init__(self, moves):
         self.rows = 7
         self.columns = 10
         self.wind = np.array([0, 0, 0, 1, 1, 1, 2, 2, 1, 0])
@@ -17,7 +17,7 @@ class GridWorld():
         self.reward = -1  # same reward at each time step
         self.gamma = 1  # undiscounted
 
-        self.move_type = input("Enter move type ['standard','kings','kings with stay']:")
+        self.move_type = moves  # input("Enter move type ['standard','kings','kings with stay']:")
         if self.move_type not in ['standard', 'kings', 'kings with stay']:
             print("Invalid input")
             sys.exit(0)
