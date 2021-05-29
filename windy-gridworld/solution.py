@@ -15,6 +15,7 @@ class Agent():
     '''
 
     def __init__(self):
+        mode = input("Enter mode of solver ['SARSA','Expected_SARSA','Q_learning']:")
         self.mdp = GridWorld()
         self.alpha = 0.5  # learning rate parameter
         self.epsilon = 0.1  # building epsilon-soft policy for exploration
@@ -32,8 +33,20 @@ class Agent():
         self.num_episodes = 1
         self.timesteps = 1
         self.time_for_episode = []
-        self.annealing = False
-        mode = input("Enter mode of solver:")
+        stochastic = input("Do you want stochastic wind ['yes','no']:")
+        if stochastic == 'yes':
+            self.mdp.stochastic_wind = True
+        elif stochastic == 'no':
+            self.mdp.stochastic_wind = False
+
+        if mode in ['SARSA', 'Expected_SARSA']:
+            annealing = input("Do you want to gradually anneal the policy ['yes','no']:")
+            if annealing == 'yes':
+                self.annealing = True
+            elif annealing == 'no':
+                self.annealing = False
+        else:
+            self.annealing = False
         self.solve(mode)
 
     def epsilon_greedy_policy(self, state):
@@ -84,7 +97,7 @@ class Agent():
         while list(self.mdp.current_state) != list(self.mdp.goal):
             initial_state = self.mdp.current_state
             initial_action = action
-            self.mdp.standard_move(self.mdp.current_state, action)
+            self.mdp.move(self.mdp.current_state, action)
             reward = self.mdp.reward
             final_state = self.mdp.current_state
             next_action = self.epsilon_greedy_policy(final_state)
@@ -106,7 +119,7 @@ class Agent():
             self.timesteps += 1
             # test code
             '''
-            if self.timesteps < 8025 and self.timesteps > 8000:
+            if self.timesteps < 100 and self.timesteps > 0:
                 input("paused inside")
                 print("episode =", self.num_episodes, ", timestep =", self.timesteps, "\ntime for episodes =", self.time_for_episode, "\nInitial state =", initial_state, ", final state =", final_state, ", action =", initial_action,
                       "\npolicy = ", self.policy, ", next action = ", next_action, " \nQ(state,.) = ", self.Q[tuple(final_state)], '\n')
@@ -132,7 +145,7 @@ class Agent():
             self.num_episodes = 1
             episode_points = [0]
             timestep_points = [0]
-            while self.timesteps < 11000:  # needs a condition for convergence
+            while self.timesteps < 8000:  # needs a condition for convergence
                 start_time = self.timesteps
                 self.one_episode(mode)
                 end_time = self.timesteps
@@ -147,25 +160,26 @@ class Agent():
             print("Invalid solver (Try 'SARSA','Expected_SARSA' or 'Q_learning')")
             return
 
-        self.epsilon = 0
-        # for state in self.state_list:
-        # self.epsilon_greedy_policy(state)
-        #print("state =", state, ", policy =", self.policy)
-        # test code
-        self.mdp.current_state = self.mdp.start
-        path = [tuple(self.mdp.current_state)]
-        while list(self.mdp.current_state) != list(self.mdp.goal):
-            self.mdp.standard_move(
-                self.mdp.current_state, self.epsilon_greedy_policy(self.mdp.current_state))
-            path.append(tuple(self.mdp.current_state))
+        if self.mdp.stochastic_wind == False:
+            self.epsilon = 0
+            # for state in self.state_list:
+            # self.epsilon_greedy_policy(state)
+            #print("state =", state, ", policy =", self.policy)
+            # test code
+            self.mdp.current_state = self.mdp.start
+            path = [tuple(self.mdp.current_state)]
+            while list(self.mdp.current_state) != list(self.mdp.goal):
+                self.mdp.move(
+                    self.mdp.current_state, self.epsilon_greedy_policy(self.mdp.current_state))
+                path.append(tuple(self.mdp.current_state))
 
-        for i in range(self.mdp.rows):
-            for j in range(self.mdp.columns):
-                state_tuple = (i, j)
-                if state_tuple in path:
-                    state_tuple = '***'
-                print(state_tuple, end='\t')
-            print('\n')
+            for i in range(self.mdp.rows):
+                for j in range(self.mdp.columns):
+                    state_tuple = (i, j)
+                    if state_tuple in path:
+                        state_tuple = '***'
+                    print(state_tuple, end='\t')
+                print('\n')
 
 
 if __name__ == '__main__':
