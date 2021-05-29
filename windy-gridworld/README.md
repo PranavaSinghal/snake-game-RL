@@ -55,9 +55,9 @@ A larger slope corresponds to shorter time per episode and therefore, a more opt
 
 ###### With standard moves & constant wind
 
-![pic](https://github.com/PranavaSinghal/snake-game-RL/blob/main/windy-gridworld/results/comparison_standard_moves_constant_wind.png)
+![pic](/results/comparison_standard_moves_constant_wind.png)
 
-Other examples can be found in [results](windy-gridworld/results)
+Other examples can be found in [results](/results)
 
 #### References
 For a complete description of windy gridworld refer to page 152, [_Reinforcement Learning_](http://incompleteideas.net/book/RLbook2020.pdf) by Barto and Sutton
