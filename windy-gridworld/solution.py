@@ -15,7 +15,6 @@ class Agent():
     '''
 
     def __init__(self):
-        mode = input("Enter mode of solver ['SARSA','Expected_SARSA','Q_learning']:")
         self.mdp = GridWorld()
         self.alpha = 0.5  # learning rate parameter
         self.epsilon = 0.1  # building epsilon-soft policy for exploration
@@ -39,6 +38,7 @@ class Agent():
         elif stochastic == 'no':
             self.mdp.stochastic_wind = False
 
+        mode = input("Enter mode of solver ['SARSA','Expected_SARSA','Q_learning']:")
         if mode in ['SARSA', 'Expected_SARSA']:
             annealing = input("Do you want to gradually anneal the policy ['yes','no']:")
             if annealing == 'yes':
@@ -52,7 +52,7 @@ class Agent():
     def epsilon_greedy_policy(self, state):
         ''' computes epsilon-greedy policy(action|state) for given state using Q
             returns an action based on computed probabilities'''
-        #print("evaluating policy")
+        # print("evaluating policy")
         state = tuple(state)
         action_values = self.Q[state]
         num_actions = len(action_values)
@@ -89,11 +89,11 @@ class Agent():
     def one_episode(self, mode='SARSA'):
         ''' 1 episode of SARSA
         initial state = start state'''
-        #print("starting episode =", self.num_episodes)
+        # print("starting episode =", self.num_episodes)
         self.mdp.current_state = self.mdp.start
         action = self.epsilon_greedy_policy(self.mdp.current_state)
         # loop over time steps till end of episode
-        #input("paused outside")
+        # input("paused outside")
         while list(self.mdp.current_state) != list(self.mdp.goal):
             initial_state = self.mdp.current_state
             initial_action = action
@@ -138,6 +138,15 @@ class Agent():
                     print('\n')
             '''
 
+    def create_plot(self, x, y, title):
+        plt.plot(x, y, 'b-')
+        plt.title(title)
+        plt.xlabel('timesteps')
+        plt.ylabel('episodes')
+        plt.xlim(0, 10000)
+        plt.ylim(0, 200)
+        plt.show()
+
     def solve(self, mode='SARSA'):
         '''solve the GridWorld MDP usig chosen solver (mode)'''
         if mode in ['SARSA', 'Expected_SARSA', 'Q_learning']:
@@ -145,7 +154,7 @@ class Agent():
             self.num_episodes = 1
             episode_points = [0]
             timestep_points = [0]
-            while self.timesteps < 8000:  # needs a condition for convergence
+            while self.timesteps < 10000:  # needs a condition for convergence
                 start_time = self.timesteps
                 self.one_episode(mode)
                 end_time = self.timesteps
@@ -153,9 +162,12 @@ class Agent():
                 episode_points.append(self.num_episodes)
                 timestep_points.append(self.timesteps)
                 self.num_episodes += 1
-            plt.plot(timestep_points, episode_points, 'ro')
-            plt.title('Performance of '+mode)
-            plt.show()
+            plot_title = f"Performance of {mode}\nmoves({self.mdp.move_type})\nstochastic wind({self.mdp.stochastic_wind})"
+            if mode != 'Q_learning':
+                plot_title += f'\nannealing({self.annealing})'
+
+            self.create_plot(timestep_points, episode_points, plot_title)
+
         else:
             print("Invalid solver (Try 'SARSA','Expected_SARSA' or 'Q_learning')")
             return
@@ -164,7 +176,7 @@ class Agent():
             self.epsilon = 0
             # for state in self.state_list:
             # self.epsilon_greedy_policy(state)
-            #print("state =", state, ", policy =", self.policy)
+            # print("state =", state, ", policy =", self.policy)
             # test code
             self.mdp.current_state = self.mdp.start
             path = [tuple(self.mdp.current_state)]
