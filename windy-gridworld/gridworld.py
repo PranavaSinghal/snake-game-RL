@@ -78,7 +78,8 @@ class GridWorld():
         # wind from starting column is responsible for displacement
         shift = 0
         if self.stochastic_wind:
-            shift = random.choice([-1, 0, 1])  # to implement stochastic wind variations
+            # to implement stochastic wind variations
+            shift = random.choice([-1, 0, 1])*bool(self.wind[start_j])
         # max displaced state accounting for wind
         max_state = new_state + up*(self.wind[start_j]+shift)
         if self.is_valid(max_state):
