@@ -55,7 +55,7 @@ A larger slope corresponds to shorter time per episode and therefore, a more opt
 
 ###### With standard moves & constant wind
 
-![pic](windy-gridworld/results/comparison_standard_moves_constant_wind.png)
+![pic](https://github.com/PranavaSinghal/snake-game-RL/blob/main/windy-gridworld/results/comparison_standard_moves_constant_wind.png)
 
 Other examples can be found in [results](windy-gridworld/results)
 
