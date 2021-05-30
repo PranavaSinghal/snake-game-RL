@@ -53,9 +53,9 @@ The performance of different learning algorithms has been compared by plotting _
 
 A larger slope corresponds to shorter time per episode and therefore, a more optimal solution. In the case of constant wind, once the slope settles on a constant value the optimal solution has been found.
 
-###### With standard moves & constant wind
+###### With standard moves & constant wind (no annealing)
 
-![pic](https://github.com/PranavaSinghal/snake-game-RL/blob/main/windy-gridworld/results/comparison_standard_moves_constant_wind.png)
+![pic](results/comparison_standard_moves_constant_wind_no_annealing.png)
 
 Other examples can be found in [results](results)
 
