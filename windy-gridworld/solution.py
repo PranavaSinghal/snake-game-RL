@@ -20,38 +20,7 @@ class Agent():
     def __init__(self, moves):
         self.mdp = GridWorld(moves)
         self.alpha = 0.5  # learning rate parameter
-        self.epsilon = 0.1  # building epsilon-soft policy for exploration
-        self.Q = dict()  # Q(S,A) state-action values
-        self.state_list = []
-        self.action_list = self.mdp.actions
-        for i in range(self.mdp.rows):
-            for j in range(self.mdp.columns):
-                self.state_list.append(tuple([i, j]))
-                # keys must be immutable (convert sate to tuple before access)
-        action_dict = dict(zip(self.action_list, len(self.action_list)*[0]))
-        list_action_dicts = [copy.deepcopy(action_dict) for i in range(len(self.state_list))]
-        # initialising all Q(S,A) = 0, including terminal value
-        self.Q = dict(zip(self.state_list, list_action_dicts))
-        self.num_episodes = 1
-        self.timesteps = 1
-        self.time_for_episode = []
-        '''
-        stochastic = input("Do you want stochastic wind ['yes','no']:")
-        if stochastic == 'yes':
-            self.mdp.stochastic_wind = True
-        elif stochastic == 'no':
-            self.mdp.stochastic_wind = False
-
-        mode = input("Enter mode of solver ['SARSA','Expected_SARSA','Q_learning']:")
-        if mode in ['SARSA', 'Expected_SARSA']:
-            annealing = input("Do you want to gradually anneal the policy ['yes','no']:")
-            if annealing == 'yes':
-                self.annealing = True
-            elif annealing == 'no':
-                self.annealing = False
-        else:
-            self.annealing = False
-        '''
+        self.reset_params()
 
     def epsilon_greedy_policy(self, state):
         ''' computes epsilon-greedy policy(action|state) for given state using Q
@@ -142,21 +111,8 @@ class Agent():
                     print('\n')
             '''
 
-    '''
-        def create_plot(self, x, y, title):
-        plt.plot(x, y, 'b-')
-        plt.title(title)
-        plt.xlabel('timesteps')
-        plt.ylabel('episodes')
-        plt.xlim(0, 10000)
-        plt.ylim(0, 200)
-        plt.show()
-    '''
-
     def solve(self, mode='SARSA'):
         '''solve the GridWorld MDP usig chosen solver (mode)'''
-        self.timesteps = 0
-        self.num_episodes = 1
         episode_points = [0]
         timestep_points = [0]
         while self.num_episodes < 200:  # needs a condition for convergence
@@ -167,9 +123,9 @@ class Agent():
             episode_points.append(self.num_episodes)
             timestep_points.append(self.timesteps)
             self.num_episodes += 1
-        plot_title = f"Performance of {mode}\nmoves({self.mdp.move_type})\nstochastic wind({self.mdp.stochastic_wind})"
+        plot_title = f"Performance of {mode}\nmoves({self.mdp.move_type})\nstochastic wind ({self.mdp.stochastic_wind})"
         if mode != 'Q_learning':
-            plot_title += f'\nannealing({self.annealing})'
+            plot_title += f'\nannealing ({self.annealing})'
 
             #self.create_plot(timestep_points, episode_points, plot_title)
 
@@ -196,11 +152,29 @@ class Agent():
 
         return (timestep_points, episode_points, plot_title)
 
+    def reset_params(self):
+        self.epsilon = 0.1  # building epsilon-soft policy for exploration
+        self.Q = dict()  # Q(S,A) state-action values
+        self.state_list = []
+        self.action_list = self.mdp.actions
+        for i in range(self.mdp.rows):
+            for j in range(self.mdp.columns):
+                self.state_list.append(tuple([i, j]))
+                # keys must be immutable (convert sate to tuple before access)
+        action_dict = dict(zip(self.action_list, len(self.action_list)*[0]))
+        list_action_dicts = [copy.deepcopy(action_dict) for i in range(len(self.state_list))]
+        # initialising all Q(S,A) = 0, including terminal value
+        self.Q = dict(zip(self.state_list, list_action_dicts))
+        self.num_episodes = 1
+        self.timesteps = 0
+        self.time_for_episode = []
+
     def answer(self, mode):
         if self.mdp.stochastic_wind:
             timestep_points, episode_points, plot_title = self.solve(mode)
             t_sum = np.array(timestep_points)
             for _ in range(9):
+                self.reset_params()
                 t_val, _, _ = self.solve(mode)
                 t_sum += np.array(t_val)
             return (t_sum/10, episode_points, plot_title)
@@ -256,7 +230,6 @@ if __name__ == '__main__':
     if args.compare == 'no':
         agent = define_agent(args)
         x, y, title = agent.answer(args.mode)
-        print(x, y, title)
         efficiency_plot(x, y, title, args.mode)
         plt.show()
     elif args.compare == 'yes':
@@ -267,6 +240,7 @@ if __name__ == '__main__':
             efficiency_plot(x, y, title, mode)
         title = title.split('\n')
         title[0] = 'Performance comparison'
+        title.append(f"annealing ({args.annealing})")
         title = "\n".join(title)
         plt.title(title)
         plt.legend()

@@ -57,6 +57,10 @@ A larger slope corresponds to shorter time per episode and therefore, a more opt
 
 ![pic](results/comparison_standard_moves_constant_wind_no_annealing.png)
 
+###### With standard moves & stochastic wind (no annealing) - significantly worse performance
+
+![pic](results/comparison_standard_moves_stochastic_wind_no_annealing.png)
+
 Other examples can be found in [results](results)
 
 #### References
