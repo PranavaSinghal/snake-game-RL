@@ -123,7 +123,7 @@ class Agent():
             self.timesteps += 1
             # test code
             '''
-            if self.timesteps < 100 and self.timesteps > 0:
+            if self.timesteps < 5050 and self.timesteps > 5000:
                 input("paused inside")
                 print("episode =", self.num_episodes, ", timestep =", self.timesteps, "\ntime for episodes =", self.time_for_episode, "\nInitial state =", initial_state, ", final state =", final_state, ", action =", initial_action,
                       "\npolicy = ", self.policy, ", next action = ", next_action, " \nQ(state,.) = ", self.Q[tuple(final_state)], '\n')
@@ -201,7 +201,7 @@ class Agent():
             timestep_points, episode_points, plot_title = self.solve(mode)
             t_sum = np.array(timestep_points)
             for _ in range(9):
-                _, t_val, _ = self.solve(mode)
+                t_val, _, _ = self.solve(mode)
                 t_sum += np.array(t_val)
             return (t_sum/10, episode_points, plot_title)
         else:
@@ -232,7 +232,7 @@ def define_agent(args):
         agent.annealing = True
     else:
         agent.annealing = False
-    return agent, mode
+    return agent
 
 
 def efficiency_plot(x, y, title, mode):
@@ -242,25 +242,27 @@ def efficiency_plot(x, y, title, mode):
     plt.ylabel('episodes')
     plt.xlim(0, 10000)
     plt.ylim(0, 200)
+    plt.grid(True)
 
 
 if __name__ == '__main__':
     parser.add_argument("--stochastic", type=str, default='no')
     parser.add_argument("--moves", type=str, default='standard')
     parser.add_argument("--mode", type=str, default='Q_learning')
-    parser.add_argument("--annealing", type=str, default='yes')
+    parser.add_argument("--annealing", type=str, default='no')
     parser.add_argument("--compare", type=str, default='yes')
 
     args = parser.parse_args()
     if args.compare == 'no':
-        agent, mode = define_agent(args)
-        x, y, title = agent.answer(mode)
-        efficiency_plot(x, y, title, mode)
+        agent = define_agent(args)
+        x, y, title = agent.answer(args.mode)
+        print(x, y, title)
+        efficiency_plot(x, y, title, args.mode)
         plt.show()
     elif args.compare == 'yes':
         for mode in ['SARSA', 'Expected_SARSA', 'Q_learning']:
             args.mode = mode
-            agent, _ = define_agent(args)
+            agent = define_agent(args)
             x, y, title = agent.answer(mode)
             efficiency_plot(x, y, title, mode)
         title = title.split('\n')
