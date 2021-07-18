@@ -2,7 +2,7 @@
 
 ## Building the classic snake game using python pygame and making it intelligent with reinforcement learning
 
-<img src = "basic-snake-game/graphics/snake-RL.png" width = 400/> \
+<img src = "./basic-snake-game/graphics/snake-RL.PNG" width = "400" /> \
 Details about each stage can be found in the respective folders.
 
 ### Stage 1 (basic-snake-game)
@@ -19,6 +19,13 @@ An RL agent attempts to navigate a windy gridworld and finds the shortest path f
 ### Stage 4 (SnakeRL-v1)
 This is a solution to the original problem statement of this project. It uses SARSA, Q-Learning or Expected SARSA to train a snake to earn high rewards in the snake game. While this approach performs quite well (with a maximum score of 58 fruits on one trial) there are still some limitations such as the snake's inability to detect that it is entering a closed loop and trapping itself. This code allows both training and graphical evaluation of the snake's performance.
 
+### Requirements
+This project uses python 3.8 along with numpy, matplotlib and pygame. To install the external libraries using pip run the following code.
+~~~
+pip install pygame
+pip install numpy
+pip install matplotlib
+~~~
 
 [Basic snake game demo](https://drive.google.com/file/d/1u0gzR0Khpb7Z9phYH4RnklGMcEfqtCSm/view?usp=sharing) \
 [Project resources](https://www.notion.so/SOC-Snake-AI-Project-471ff57983a24f749ca0ec08df8c9472) \
