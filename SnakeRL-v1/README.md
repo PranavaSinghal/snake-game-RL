@@ -2,7 +2,7 @@
 
 This is the solution to the original problem statement, to use reinforcement learning to make a snake reach high scores in the snake game.
 
-The structure and objective of the snake game is similar to what was described in __basic-snake-game__. I have only made a few style improvements to the code of the game and divided it into 3 files - __fruit.py, snake.py, game.py__. These contain all of the game functionality along with some additional variables to extract information for the snake to use during learning. __agent.py__ implements reinforcement learning on top of this game.
+The structure and objective of the snake game is similar to what was described in __basic-snake-game__. I have only made a few style improvements to the code of the game and divided it into 3 files - __fruit.py, snake.py, game.py__. These contain all of the game functionality along with some additional variables to extract information for the snake to use during learning. __agent.py__ implements reinforcement learning on top of this game. The files __Q_4.txt,Q_8.txt and Q_12.txt__ are stored/pickled Q values of previous training experience. You can use these files to continue on top is this training or delete/move them to start training from scratch. The remaining folders contain essential game files just like __basic-snake-game__.
 
 ### Brief Overview of the Solution
 The agent uses tabular methods like SARSA, Expected_SARSA and Q_learning to learn how to optimise rewards. Tabular methods store Q-values for each state-action pair and therefore a smaller number of state-action pairs allows faster and efficient training.
