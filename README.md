@@ -21,5 +21,5 @@ This is a solution to the original problem statement of this project. It uses SA
 
 [Basic snake game demo](https://drive.google.com/file/d/1u0gzR0Khpb7Z9phYH4RnklGMcEfqtCSm/view?usp=sharing) \
 [Project resources](https://www.notion.so/SOC-Snake-AI-Project-471ff57983a24f749ca0ec08df8c9472) \
-[Windy gridworld demo](https://drive.google.com/file/d/1Wq-gtF8vT03Jqy-7t7ziinwTB0la-mZD/view?usp=sharing)
+[Windy gridworld demo](https://drive.google.com/file/d/1Wq-gtF8vT03Jqy-7t7ziinwTB0la-mZD/view?usp=sharing)\
 [Snake training in progress](https://drive.google.com/file/d/1JjylKlK8kachEsdyanH9KO7Az1WJMub8/view?usp=sharing)
