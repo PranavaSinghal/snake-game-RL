@@ -2,7 +2,7 @@
 
 This is the solution to the original problem statement.
 
-The structure and objective of the snake game is similar to what was described in [basic-snake-game](basic-snake-game). I have only made a few style improvements to the code of the game and divided it into 3 files - __fruit.py, snake.py, game.py__. These contain all of the game functionality along with some additional variables to extract information for the snake to use during learning. __agent.py__ implements reinforcement learning on top of this game.
+The structure and objective of the snake game is similar to what was described in __basic-snake-game__. I have only made a few style improvements to the code of the game and divided it into 3 files - __fruit.py, snake.py, game.py__. These contain all of the game functionality along with some additional variables to extract information for the snake to use during learning. __agent.py__ implements reinforcement learning on top of this game.
 
 ### Getting Started
 
@@ -10,7 +10,7 @@ The structure and objective of the snake game is similar to what was described i
 ~~~
 python game.py
 ~~~
-More details about the game are available under [basic-snake-game](basic-snake-game).
+More details about the game are available under __basic-snake-game__.
 
 2) In order to explore reinforcement learning for the snake agent, you can do the following:
 
