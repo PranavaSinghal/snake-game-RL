@@ -14,7 +14,7 @@ def valid(i, j, y_size, x_size, maze):
 
 
 def encoder(filename):
-    printf = open(r'D:\PranavaStudy\IITB\Code\SoC_2021\base\mdpfile.txt', mode='w')
+    printf = open(r'mdpfile.txt', mode='w')
     data = filename.readlines()
     i = 0
     y_size = len(data)
