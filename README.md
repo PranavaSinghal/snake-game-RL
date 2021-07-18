@@ -2,6 +2,7 @@
 
 ## Building the classic snake game using python pygame and making it intelligent with reinforcement learning
 
+<img src = "basic-snake-game/graphics/snake-RL.png" width = 400/> \
 Details about each stage can be found in the respective folders.
 
 ### Stage 1 (basic-snake-game)

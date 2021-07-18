@@ -58,7 +58,7 @@ class Agent:
     def init_state_space(self):
         # all possible fruit positions relative to head position
         fruit_positions = ['UL', 'U', 'UR', 'L', 'R', 'DL', 'D', 'DR']
-        self.num_check_squares = 8  # number of surrounding squares checked for obstacles
+        self.num_check_squares = 4  # number of surrounding squares checked for obstacles
         n = self.num_check_squares
         obstacles = []
         for i in range(2**n):
