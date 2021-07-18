@@ -33,7 +33,7 @@ These are 3 different _Temporal Difference Learning_ methods
 + Exploration is beneficial for dynamic environments (for instance, in the case of stochastic wind)
 
 5) Compare
-+ yes - plots all three algorithms onn same graph for comparison
++ yes - plots all three algorithms on the same graph for comparison
 + no - plots graph for specified mode (Q_learning by default)
 ##### For example you may execute any of these
 ~~~
