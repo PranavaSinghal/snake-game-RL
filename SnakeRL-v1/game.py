@@ -70,10 +70,10 @@ class Game:
     def load_sounds(self):
         self.crunch_sound = pygame.mixer.Sound('sound/crunch.wav')
         # self.crunch_sound.set_volume(0.2)
-        self.crunch_sound.set_volume(0)
+        # self.crunch_sound.set_volume(0)
         self.game_over_sound = pygame.mixer.Sound('sound/end.wav')
         # self.game_over_sound.set_volume(0.1)
-        self.game_over_sound.set_volume(0)
+        # self.game_over_sound.set_volume(0)
 
     def play_crunch_sound(self):
         self.crunch_sound.play()

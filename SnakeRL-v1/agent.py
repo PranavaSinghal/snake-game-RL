@@ -79,7 +79,7 @@ class Agent:
 
     def start_learning(self):
         self.init_Q()
-        self.alpha = 1
+        self.alpha = 0.95
         self.epsilon = 0.1
         if not self.training:
             self.epsilon = 0
