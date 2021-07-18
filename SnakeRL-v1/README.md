@@ -1,8 +1,16 @@
 # Reinforcement Learning on the Snake Game
 
-This is the solution to the original problem statement.
+This is the solution to the original problem statement, to use reinforcement learning to make a snake reach high scores in the snake game.
 
 The structure and objective of the snake game is similar to what was described in __basic-snake-game__. I have only made a few style improvements to the code of the game and divided it into 3 files - __fruit.py, snake.py, game.py__. These contain all of the game functionality along with some additional variables to extract information for the snake to use during learning. __agent.py__ implements reinforcement learning on top of this game.
+
+### Brief Overview of the Solution
+The agent uses tabular methods like SARSA, Expected_SARSA and Q_learning to learn how to optimise rewards. Tabular methods store Q-values for each state-action pair and therefore a smaller number of state-action pairs allows faster and efficient training.
+
+We reduced the size of the state space by making the snake only check its neighbouring squares for obstacles. By default it only checks the 4 squares immediately next to its head. It only knows the relative position of the fruit from 8 directions up, down, left and right and the four diagonal regions between them. The snake is not aware of the exact position of the fruit on the board, only its relative position with respect to its head. This means that the state space now consists of 8*(2^4) = 128 states, 8 for relative fruit positions and 2^4 for the presence or absence of obstacles in the neighbouring squares.
+
+Every state has 4 actions up, down, left and right. Therefore there is a total of 128*4 = 512 state-action pairs that the snake has to learn about. This is a considerably reduced representation of the state-action space which still contains most of the essential information that the snake needs to avoid death and get fruit.
+
 
 ### Getting Started
 
@@ -53,8 +61,29 @@ Initially the snake agent does not know how to behave in its environment and all
 - ##### Testing the snake
  Once the snake has been trained we can evaluate its performance. While the snake employs an epsilon-soft (exploratory) policy while choosing actions during training, it follows a greedy policy while testing (always choosing the best actions according to its knowledge).
 
- For testing how well it has learnt it is a good idea to set a low value for num_max_episodes, maybe around 10 to 30. Run the following
+ For testing how well it has learnt it is a good idea to set a low value for num_max_episodes, maybe around 10 to 30. The snake gets better scores during testing since it makes fewer mistakes by exploring. Run the following code to test.
  ~~~
  python agent.py --mode [algorithm] --train no
  ~~~
  --train is also an optional argument which is set to 'yes' by default. Selecting 'no' explicitly lets the program know that you are not training and are testing instead.
+
+- #### Comparing different learning algorithms
+ You can also compare SARSA, Expected_SARSA and Q_learning by seeing how the snakes reward varies with episodes for different algorithms. Run the following
+ ~~~
+ python agent.py --compare yes
+ ~~~
+ This runs the snake game thrice for num_max_episodes number of episodes each. At the end it generates a graph comapring scores in each episode using different algorithms.
+
+ The argument --train set to no compares these algorithms under greedy policy. --mode has no effect.
+
+ Note: This method always trains from scratch and does not leverage previous training data. This design choice is to avoid unfair comparisons where previous knowledge gained by training over one algorithm supersedes that of the other algorithms.
+
+ For an example of such a comparison (300 episodes each, so its about 2 hours worth of learning in total) watch [this](https://drive.google.com/file/d/1JjylKlK8kachEsdyanH9KO7Az1WJMub8/view?usp=sharing) video.
+
+The most general call to agent.py therefore is
+~~~
+python agent.py --compare [yes/no] --train [yes/no] --mode [SARSA/Expected_SARSA/Q_learning]
+~~~
+
+### Limitations
+While this approach performs quite well (with a maximum score of 58 fruits on one of my trials) there are still some limitations such as the snake's inability to detect that it is entering a closed loop and trapping itself. This is due to the choice of a reduced state representation in order to keep the number of states low and allow faster, more efficient training. However this representation does not capture all the details of the state and can lead to the snake making bad decisions at times. The fluctuation in training score can also be attributed to this to a large extent in addition to the need for more training episodes.

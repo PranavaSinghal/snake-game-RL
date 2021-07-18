@@ -2,6 +2,8 @@
 
 ## Building the classic snake game using python pygame and making it intelligent with reinforcement learning
 
+Project mentor - [Shubham Lohiya](https://github.com/shubhlohiya)
+
 <img src = "./basic-snake-game/graphics/snake-RL.PNG" width = "400" /> \
 Details about each stage can be found in the respective folders.
 
@@ -30,6 +32,10 @@ pip install numpy
 pip install matplotlib
 ~~~
 
+### Thanks
+I want to thank my mentor [Shubham Lohiya](https://github.com/shubhlohiya) for his constant guidance throughout this project despite his busy schedule. The project resources created by him helped me pace my learning and gave a good mix of theoretical and practical exposure. This is my first time working on a coding project and his support has definitely helped me in overcoming my aversion to and fear of coding. He was always there to answer our doubts and review our code, giving us suggestions on code presentation and style as well as correcting logical flaws. I also want to thank IIT Bombay for giving us this opportunity to explore programming in Summer of Code, with such interesting coding tasks and enthusiastic mentors.
+
+### Important Links
 [Basic snake game demo](https://drive.google.com/file/d/1u0gzR0Khpb7Z9phYH4RnklGMcEfqtCSm/view?usp=sharing) \
 The project timeline as well as resources can be found at [Project resources](https://www.notion.so/SOC-Snake-AI-Project-471ff57983a24f749ca0ec08df8c9472) \
 [Windy gridworld demo](https://drive.google.com/file/d/1Wq-gtF8vT03Jqy-7t7ziinwTB0la-mZD/view?usp=sharing)\
