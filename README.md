@@ -8,10 +8,10 @@ Details about each stage can be found in the respective folders.
 ### Stage 1 (basic-snake-game) : 1st April, 2021
 Making a basic snake game, no reinforcement learning involved. The _objective_ is to collect as many apples as possible without making the snake crash into the walls or itself. The _game controls_ are the arrow keys.
 
-I've recreated the snake game by Clear Code which you can find on GitHub, [here](github.com/clear-code-projects/Snake) and on his YouTube channel, [here](https://www.youtube.com/watch?v=QFvqStqPCRU)
+I've recreated the snake game by Clear Code which you can find on GitHub, [here](github.com/clear-code-projects/Snake) and on his YouTube channel, [here](https://www.youtube.com/watch?v=QFvqStqPCRU).
 
 ### Stage 2 (value-iteration) : 12th May, 2021
-Implementing the value iteration algorithm to solve MDPs and formulating a maze as an MDP (the current implementation is quite inefficient and memory heavy but is logically correct). This is a solution to this [project](https://www.cse.iitb.ac.in/~shivaram/teaching/old/cs747-a2020/pa-2/programming-assignment-2.html)
+Implementing the value iteration algorithm to solve MDPs and formulating a maze as an MDP (the current implementation is quite inefficient and memory heavy but is logically correct). This is a solution to this [project](https://www.cse.iitb.ac.in/~shivaram/teaching/old/cs747-a2020/pa-2/programming-assignment-2.html).
 
 ### Stage 3 (windy-gridworld) : 30th May, 2021
 An RL agent attempts to navigate a windy gridworld and finds the shortest path from start to finish. Different algorithms are applied to solve this problem and their performance is graphically compared, namely, SARSA, Q-Learning and Expected SARSA. This is a solution to a problem on page 152, [_Reinforcement Learning_](http://incompleteideas.net/book/RLbook2020.pdf) by Barto and Sutton.
